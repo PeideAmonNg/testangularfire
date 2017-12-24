@@ -1,0 +1,11 @@
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.colorLabel{
+	width: 0.3em;	
+	height: 1em;
+	display: inline-block;
+	vertical-align: middle;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "angulartodo",
+  "version": "1.0.0",
+  "description": "to do list in angularjs",
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  },
+  "scripts": {
+    "start": "http-server ./app -a localhost -p 8000 -c-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeideAmonNg/angulartodolist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeideAmonNg/angulartodolist/issues"
+  },
+  "homepage": "https://github.com/PeideAmonNg/angulartodolist#readme"
+}

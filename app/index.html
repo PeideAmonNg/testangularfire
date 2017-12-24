@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="project">
+  <head>    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <link rel="stylesheet" href="https://angularjs.org/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.min.js"></script>
+    <script src="todo.js"></script>
+    <link rel="stylesheet" href="todo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js">
+   </script>
+    <!-- // <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script> -->
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCrVnE4NQWLALVhWQqmrEkDGTi71Vcgatw",
+        authDomain: "todolist-5d010.firebaseapp.com",
+        databaseURL: "https://todolist-5d010.firebaseio.com",
+        projectId: "todolist-5d010",
+        storageBucket: "todolist-5d010.appspot.com",
+        messagingSenderId: "688215275751"
+      };
+      firebase.initializeApp(config);
+    </script>
+    
+    <script src="project.js"></script>
+    <script src="project-list.js"></script>
+  </head>
+  <body class="container" ng-controller="MyCtrl">
+    <h2>users</h2>
+    <ul>
+      <li ng-repeat="user in users">
+        {{user}}
+      </li>
+    </ul>
+
+    <form ng-submit="add()">
+        <input type="text" name="site" ng-model="name" required> 
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+
+  </body>
+
+  <script src='fire.js'>
+  </script>
+</html>
