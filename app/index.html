@@ -30,6 +30,10 @@
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
+    <script src="project.js"></script>
+    <script src="project-list.js"></script>
+    <script src='fire.js'></script>
+
     <script>
       // Initialize Firebase
       var config = {
@@ -43,30 +47,13 @@
       firebase.initializeApp(config);
     </script>
     
-    <script src="project.js"></script>
-    <script src="project-list.js"></script>
   </head>
-  <body class="container" ng-controller="MyCtrl">
+
+  <body class="container">
+  <!-- <body class="container" ng-controller="MyCtrl"> -->
     <h2>users</h2>
-    <ul>
-      <li ng-repeat="user in users">
-        <div class="u">
-          {{user}}
-        </div>
-        <a href="#" ng-click="users.$remove(user)">
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
-      </li>
-    </ul>
-
-    <form ng-submit="users.$add({name: name})">
-        <input type="text"  name="site" ng-model="name" placeholder="user name" required> 
-        <input class="btn-primary" type="submit" value="add">
-    </form> 
-
-    <input type="text" name="site" ng-model="searchedName" placeholder="search" ng-change="search()" required> 
+    <div ng-view></div>
   </body>
 
-  <script src='fire.js'>
-  </script>
+  
 </html>

@@ -1,0 +1,20 @@
+<ul>
+  <li ng-repeat="user in userList.users">
+    <div class="u">
+      {{user}}
+    </div>
+    <a ng-href="#/edit/{{user.$id}}">
+      <span class="glyphicon glyphicon-pencil"></span>
+    </a>  
+    <a href="#" ng-click="userList.users.$remove(user)">
+      <span class="glyphicon glyphicon-remove"></span>
+    </a>
+  </li>
+</ul>
+
+<form ng-submit="userList.users.$add({name: name})">
+    <input type="text" name="site" ng-model="name" placeholder="user name" required> 
+    <input class="btn-primary" type="submit" value="add">
+</form> 
+
+<input type="text" name="site" ng-model="searchedName" placeholder="search" ng-change="search()" required> 

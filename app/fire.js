@@ -1,16 +1,9 @@
-angular.module('project', ['firebase'])
+angular.module('project', ['ngRoute', 'firebase'])
 .controller("MyCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
   function($scope, $firebaseObject, $firebaseArray) {
     var ref = firebase.database().ref().child("users");
     $scope.users = $firebaseArray(ref);
-    // list.$add({name: "jill"}).then(function(ref) {
-    //   var id = ref.key;
-    //   console.log("key " + ref.key)
-    //   console.log("added record with id " + id);
-    //   list.$indexFor(id); // returns location in the array
-    //   console.log(list.$indexFor(id));
-    //   console.log("length " + list.length);
-    // });
+
     
     $scope.name = 'default';
     
@@ -27,24 +20,57 @@ angular.module('project', ['firebase'])
         $scope.users = $firebaseArray(ref);
       }
     }
-
-    // ref.child('users/2/name').set({first: "john", last: "wick"});
-
-    // to take an action after the data loads, use the $loaded() promise
-    // list.$loaded().then(function() {
-    //   // console.log("loaded record:", obj.$id, obj.someOtherKeyInData);
-
-    //   // To iterate the key/value pairs of the object, use angular.forEach()
-    //   // angular.forEach(obj, function(value, key) {
-    //   //   console.log(key, value);
-    //   // });
-    // users = list;
-    // });
-
-    // To make the data available in the DOM, assign it to $scope
-    // $scope.data = obj;
-
-    // For three-way data bindings, bind it to the scope instead
-    // obj.$bindTo($scope, "data");
   }
-]);
+])
+
+.config(function($routeProvider, $locationProvider) {
+  
+  $locationProvider.hashPrefix('');
+  $routeProvider
+    .when('/', {
+      controller:'UserListController as userList',
+      templateUrl:'app/userlist.html'
+    })
+    .when('/edit/:userId', {
+      controller:'EditUserController as editUser',
+      templateUrl:'app/edituser.html'
+    })
+    // .when('/new', {
+    //   controller:'NewProjectController as editProject',
+    //   templateUrl:'detail.html',
+    //   resolve: resolveProjects
+    // })
+    .otherwise({
+      redirectTo:'/'
+    });
+})
+
+.controller('UserListController', ["$scope", "$firebaseObject", "$firebaseArray", function($scope, $firebaseObject, $firebaseArray) {
+    var ref = firebase.database().ref().child("users");
+    var list = $firebaseArray(ref);
+    var userList = this;
+    userList.users = list;
+}])
+ 
+.controller('EditUserController', ["$scope", "$firebaseObject", "$firebaseArray", "$routeParams", "$location", function($scope, $firebaseObject, $firebaseArray, $routeParams, $location) {
+    var editUser = this;
+    console.log($routeParams);
+    var userId = $routeParams.userId;
+    var ref = firebase.database().ref().child("users/");
+    var list = $firebaseArray(ref);
+    list.$loaded().then(function() { 
+      editUser.user = list.$getRecord(userId);
+    });
+
+    editUser.destroy = function() {
+        list.$remove(editUser.user).then(function(data) {
+            $location.path('/');
+        });
+    };
+ 
+    editUser.save = function() {
+        list.$save(editUser.user).then(function(data) {
+           $location.path('/');
+        });
+    };
+}]);
