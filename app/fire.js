@@ -2,10 +2,7 @@ angular.module('project', ['firebase'])
 .controller("MyCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
   function($scope, $firebaseObject, $firebaseArray) {
     var ref = firebase.database().ref().child("users");
-    var users;
-    // var obj = $firebaseObject(ref);
-    var list = $firebaseArray(ref);
-    $scope.users = list;
+    $scope.users = $firebaseArray(ref);
     // list.$add({name: "jill"}).then(function(ref) {
     //   var id = ref.key;
     //   console.log("key " + ref.key)
@@ -14,25 +11,35 @@ angular.module('project', ['firebase'])
     //   console.log(list.$indexFor(id));
     //   console.log("length " + list.length);
     // });
-
+    
     $scope.name = 'default';
     
     $scope.add = function(){
-      list.$add({name: $scope.name})
+      $scope.users.$add({name: $scope.name})
     };
+
+    $scope.search = function(){
+      if(!$scope.searchedName){
+        var ref = firebase.database().ref().child("users");
+        $scope.users = $firebaseArray(ref);
+      }else{
+        var ref = firebase.database().ref().child("users").orderByChild("name").equalTo($scope.searchedName);
+        $scope.users = $firebaseArray(ref);
+      }
+    }
 
     // ref.child('users/2/name').set({first: "john", last: "wick"});
 
     // to take an action after the data loads, use the $loaded() promise
-    list.$loaded().then(function() {
-      // console.log("loaded record:", obj.$id, obj.someOtherKeyInData);
+    // list.$loaded().then(function() {
+    //   // console.log("loaded record:", obj.$id, obj.someOtherKeyInData);
 
-      // To iterate the key/value pairs of the object, use angular.forEach()
-      // angular.forEach(obj, function(value, key) {
-      //   console.log(key, value);
-      // });
-    users = list;
-    });
+    //   // To iterate the key/value pairs of the object, use angular.forEach()
+    //   // angular.forEach(obj, function(value, key) {
+    //   //   console.log(key, value);
+    //   // });
+    // users = list;
+    // });
 
     // To make the data available in the DOM, assign it to $scope
     // $scope.data = obj;
