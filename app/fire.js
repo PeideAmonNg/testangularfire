@@ -11,15 +11,15 @@ angular.module('project', ['ngRoute', 'firebase'])
       $scope.users.$add({name: $scope.name})
     };
 
-    $scope.search = function(){
-      if(!$scope.searchedName){
-        var ref = firebase.database().ref().child("users");
-        $scope.users = $firebaseArray(ref);
-      }else{
-        var ref = firebase.database().ref().child("users").orderByChild("name").equalTo($scope.searchedName);
-        $scope.users = $firebaseArray(ref);
-      }
-    }
+    // $scope.search = function(){
+    //   if(!$scope.searchedName){
+    //     var ref = firebase.database().ref().child("users");
+    //     $scope.users = $firebaseArray(ref);
+    //   }else{
+    //     var ref = firebase.database().ref().child("users").orderByChild("name").equalTo($scope.searchedName);
+    //     $scope.users = $firebaseArray(ref);
+    //   }
+    // }
   }
 ])
 
@@ -50,6 +50,16 @@ angular.module('project', ['ngRoute', 'firebase'])
     var list = $firebaseArray(ref);
     var userList = this;
     userList.users = list;
+
+    $scope.search = function(){
+      if(!$scope.searchedName){
+        var ref = firebase.database().ref().child("users");
+        userList.users = $firebaseArray(ref);
+      }else{
+        var ref = firebase.database().ref().child("users").orderByChild("name").equalTo($scope.searchedName);
+        userList.users = $firebaseArray(ref);
+      }
+    }
 }])
  
 .controller('EditUserController', ["$scope", "$firebaseObject", "$firebaseArray", "$routeParams", "$location", function($scope, $firebaseObject, $firebaseArray, $routeParams, $location) {
